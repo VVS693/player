@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Player</title>
+    <link rel="stylesheet" href="player.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="cover-container">
+        <img
+          class="cover"
+          src=""
+          width="300"
+          height="300"
+        />
+      </div>
+
+      <div class="songData">
+        <div class="title">The Day That Never Comes</div>
+        <div class="artist">Metallica</div>
+      </div>
+
+      <div class="progressBar">
+        <div class="progressBarLeft"></div>
+        <div class="progressBarCenter"></div>
+        <div class="progressBarRight"></div>
+      </div>
+      <div class="songTiming">
+        <div>0.00</div>
+        <div>0.00</div>
+      </div>
+
+      <nav>
+        <button class="previousTrack">
+          <svg
+            aria-hidden="true"
+            width="60px"
+            height="60px"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M9.6 8.8L9.84234 8.66152C10.3582 8.36676 11 8.73922 11 9.33333L11 14.6667C11 15.2608 10.3582 15.6332 9.84234 15.3385L9.6 15.2L5.4 12.8C4.78099 12.4463 4.78099 11.5537 5.4 11.2L9.6 8.8Z"
+              stroke="#323232"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M17.4 8L17.5867 7.88333C18.2019 7.4988 19 7.94112 19 8.66667L19 15.3333C19 16.0589 18.2019 16.5012 17.5867 16.1167L17.4 16L12.6 13C11.861 12.5381 11.861 11.4619 12.6 11L17.4 8Z"
+              stroke="#323232"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </button>
+
+        <div class="play-pause">
+          <button class="play">
+            <svg
+              aria-hidden="true"
+              width="60px"
+              height="60px"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
+                stroke="#323232"
+                stroke-width="1.5"
+              />
+              <path
+                d="M10.9 8.8L10.6577 8.66152C10.1418 8.36676 9.5 8.73922 9.5 9.33333L9.5 14.6667C9.5 15.2608 10.1418 15.6332 10.6577 15.3385L10.9 15.2L15.1 12.8C15.719 12.4463 15.719 11.5537 15.1 11.2L10.9 8.8Z"
+                stroke="#323232"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </button>
+
+          <button class="pause">
+            <svg
+              aria-hidden="true"
+              width="60px"
+              height="60px"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
+                stroke="#323232"
+                stroke-width="1.5"
+              />
+              <path
+                d="M14 9L14 15"
+                stroke="#323232"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M10 9L10 15"
+                stroke="#323232"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </button>
+        </div>
+
+        <button class="nextTrack">
+          <svg
+            aria-hidden="true"
+            width="60px"
+            height="60px"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M14.4 8.8L14.1577 8.66152C13.6418 8.36676 13 8.73922 13 9.33333L13 14.6667C13 15.2608 13.6418 15.6332 14.1577 15.3385L14.4 15.2L18.6 12.8C19.219 12.4463 19.219 11.5537 18.6 11.2L14.4 8.8Z"
+              stroke="#323232"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M6.6 8L6.41333 7.88333C5.79807 7.4988 5 7.94112 5 8.66667L5 15.3333C5 16.0589 5.79807 16.5012 6.41333 16.1167L6.6 16L11.4 13C12.139 12.5381 12.139 11.4619 11.4 11L6.6 8Z"
+              stroke="#323232"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </button>
+      </nav>
+    </div>
+
+    <script src="./player.js"></script>
+  </body>
+</html>

@@ -135,7 +135,6 @@ const pauseClickButton = () => {
 };
 
 const playTrack = () => {
-  console.log(audioElement);
   audioElement.addEventListener("ended", nextTrack);
   audioElement.addEventListener("timeupdate", updateProgressBar);
   audioElement.play();

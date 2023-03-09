@@ -135,6 +135,7 @@ const pauseClickButton = () => {
 };
 
 const playTrack = () => {
+  console.log(audioElement);
   audioElement.addEventListener("ended", nextTrack);
   audioElement.addEventListener("timeupdate", updateProgressBar);
   audioElement.play();
@@ -198,30 +199,53 @@ window.addEventListener("resize", updateProgressBar);
 setCurrentTrack(currentTrackNumber);
 let audioElement = new Audio(trackUrl);
 
-progressBarCenter.onmousedown = (event) => {
-  event.preventDefault();
+progressBarCenter.onpointerdown = (event) => {
+  progressBarCenter.setPointerCapture(event.pointerId);
   let shiftX = event.clientX - progressBarCenter.getBoundingClientRect().left;
   let newLeft;
-  const onMouseMove = (event) => {
+  progressBarCenter.onpointermove = (event) => {
     newLeft = event.clientX - shiftX - progressBar.getBoundingClientRect().left;
-
-    if (newLeft < 0) {
-      newLeft = 0;
+    if (newLeft < -9) {
+      newLeft = -9;
     }
     let rightEdge = progressBar.offsetWidth - progressBarCenter.offsetWidth;
-    if (newLeft > rightEdge) {
-      newLeft = rightEdge;
+    if (newLeft > rightEdge + 9) {
+      newLeft = rightEdge + 9;
     }
     progressBarCenter.style.left = newLeft + "px";
     updateProgressBar(newLeft + 9);
   };
-
-  const onMouseUp = () => {
-    document.removeEventListener("mouseup", onMouseUp);
-    document.removeEventListener("mousemove", onMouseMove);
+  progressBarCenter.onpointerup = () => {
+    progressBarCenter.onpointermove = null;
+    progressBarCenter.onpointerup = null;
     updateProgressBar(newLeft + 9);
   };
-
-  document.addEventListener("mousemove", onMouseMove);
-  document.addEventListener("mouseup", onMouseUp);
 };
+
+// progressBarCenter.onmousedown = (event) => {
+//   event.preventDefault();
+//   let shiftX = event.clientX - progressBarCenter.getBoundingClientRect().left;
+//   let newLeft;
+//   const onMouseMove = (event) => {
+//     newLeft = event.clientX - shiftX - progressBar.getBoundingClientRect().left;
+
+//     if (newLeft < -9) {
+//       newLeft = -9;
+//     }
+//     let rightEdge = progressBar.offsetWidth - progressBarCenter.offsetWidth;
+//     if (newLeft > rightEdge + 9) {
+//       newLeft = rightEdge + 9;
+//     }
+//     progressBarCenter.style.left = newLeft + "px";
+//     updateProgressBar(newLeft + 9);
+//   };
+
+//   const onMouseUp = () => {
+//     document.removeEventListener("mouseup", onMouseUp);
+//     document.removeEventListener("mousemove", onMouseMove);
+//     updateProgressBar(newLeft + 9);
+//   };
+
+//   document.addEventListener("mousemove", onMouseMove);
+//   document.addEventListener("mouseup", onMouseUp);
+// };

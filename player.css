@@ -11,17 +11,7 @@
   max-width: 600px;
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
   align-items: center;
-}
-
-@keyframes coverAnimationIn {
-  from {
-    scale: 1;
-  }
-  to {
-    scale: 0.7;
-  }
 }
 
 .cover-container {
@@ -89,7 +79,6 @@
   background-color: coral;
 }
 
-.progressBarCenter:hover,
 .progressBarCenter:active {
   transform: scale(1.5);
 }
@@ -158,13 +147,18 @@ button {
   vertical-align: middle;
 }
 
-.play:hover,
-.pause:hover,
-.previousTrack:hover,
-.nextTrack:hover {
-  box-shadow: 0px 0px 10px 5px rgb(219, 230, 231);
-  background-color: rgb(219, 230, 231);
-  border-radius: 100%;
+@media (hover) {
+  .progressBarCenter:hover {
+    transform: scale(1.5);
+  }
+  .play:hover,
+  .pause:hover,
+  .previousTrack:hover,
+  .nextTrack:hover {
+    box-shadow: 0px 0px 10px 5px rgb(219, 230, 231);
+    background-color: rgb(219, 230, 231);
+    border-radius: 100%;
+  }
 }
 
 .play :active,

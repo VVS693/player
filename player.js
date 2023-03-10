@@ -193,10 +193,10 @@ audioElement.addEventListener("timeupdate", updateProgressBar);
 window.addEventListener("resize", updateProgressBar);
 
 progressBarCenter.onpointerdown = (event) => {
-  isPlaying && audioElement.pause();
   progressBarCenter.setPointerCapture(event.pointerId);
   let shiftX = event.clientX - progressBarCenter.getBoundingClientRect().left;
   let newLeft;
+  let newLeftChange
   progressBarCenter.onpointermove = (event) => {
     newLeft = event.clientX - shiftX - progressBar.getBoundingClientRect().left;
     if (newLeft < -9) {
@@ -207,12 +207,13 @@ progressBarCenter.onpointerdown = (event) => {
       newLeft = rightEdge + 9;
     }
     progressBarCenter.style.left = newLeft + "px";
-    updateProgressBar(newLeft + 9);
+    if (newLeft !== newLeftChange) {
+      updateProgressBar(newLeft + 9);
+    }
+    newLeftChange = newLeft
   };
   progressBarCenter.onpointerup = () => {
     progressBarCenter.onpointermove = null;
     progressBarCenter.onpointerup = null;
-    updateProgressBar(newLeft + 9);
-    isPlaying && audioElement.play();
   };
 };

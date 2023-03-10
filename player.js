@@ -159,7 +159,7 @@ const playActions = () => {
 const previousTrack = () => {
   if (currentTrackNumber - 1 > 0) {
     currentTrackNumber--;
-  } else currentTrackNumber = 0;
+  } else currentTrackNumber = myPlayList.length - 1;
   setCurrentTrack(currentTrackNumber);
   playActions();
 };
@@ -190,15 +190,13 @@ pauseButton.addEventListener("click", pauseTrack);
 previousTrackButton.addEventListener("click", previousTrack);
 nextTrackButton.addEventListener("click", nextTrack);
 progressBar.addEventListener("click", progressBarClick);
-progressBarCenter.addEventListener("dragstart", () =>
-  console.log("drag start")
-);
 window.addEventListener("resize", updateProgressBar);
 
 setCurrentTrack(currentTrackNumber);
 let audioElement = new Audio(trackUrl);
 
 progressBarCenter.onpointerdown = (event) => {
+  isPlaying && audioElement.pause();
   progressBarCenter.setPointerCapture(event.pointerId);
   let shiftX = event.clientX - progressBarCenter.getBoundingClientRect().left;
   let newLeft;
@@ -218,6 +216,7 @@ progressBarCenter.onpointerdown = (event) => {
     progressBarCenter.onpointermove = null;
     progressBarCenter.onpointerup = null;
     updateProgressBar(newLeft + 9);
+    isPlaying && audioElement.play();
   };
 };
 

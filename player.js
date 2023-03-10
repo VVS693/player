@@ -81,9 +81,11 @@ const setCurrentTrack = (currentTrackNumber) => {
   trackCover.src = coverUrl;
 };
 const timeFormat = (time) => {
-  const minutes = Math.floor(time / 60);
-  const seconds = Math.floor(time % 60);
-  return `${minutes}.${seconds < 10 ? "0" : ""}${seconds}`;
+  if (time) {
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+    return `${minutes}.${seconds < 10 ? "0" : ""}${seconds}`;
+  } else return "0.00";
 };
 const updateProgressBar = (newLeft) => {
   const trackDuration = audioElement.duration;
@@ -108,9 +110,7 @@ const updateProgressBar = (newLeft) => {
 const progressBarClick = (event) => {
   const rect = progressBar.getBoundingClientRect();
   const clickX = event.clientX - rect.x;
-  const trackDuration = Math.round(audioElement.duration);
-  audioElement.currentTime = (trackDuration * clickX) / rect.width;
-  updateProgressBar();
+  updateProgressBar(clickX);
 };
 
 const playClickButton = () => {
@@ -119,7 +119,6 @@ const playClickButton = () => {
   playButton.classList.add("buttonDisabled");
   pauseButton.classList.remove("buttonDisabled");
   pauseButton.classList.add("buttonActive");
-
   trackCover.classList.remove("coverIn");
   trackCover.classList.add("coverOut");
 };
@@ -129,14 +128,11 @@ const pauseClickButton = () => {
   pauseButton.classList.add("buttonDisabled");
   playButton.classList.remove("buttonDisabled");
   playButton.classList.add("buttonActive");
-
   trackCover.classList.remove("coverOut");
   trackCover.classList.add("coverIn");
 };
 
 const playTrack = () => {
-  audioElement.addEventListener("ended", nextTrack);
-  audioElement.addEventListener("timeupdate", updateProgressBar);
   audioElement.play();
   playClickButton();
 };
@@ -146,21 +142,20 @@ const pauseTrack = () => {
 };
 
 const playActions = () => {
-  audioElement.pause();
-  audioElement.removeEventListener("timeupdate", updateProgressBar);
-  audioElement.removeEventListener("ended", nextTrack);
-  audioElement = new Audio(trackUrl);
-  audioElement.addEventListener("timeupdate", updateProgressBar);
-  audioElement.addEventListener("ended", nextTrack);
-  audioElement.play();
-  !isPlaying && playClickButton();
+  setCurrentTrack(currentTrackNumber);
+  audioElement.src = trackUrl;
+  isPlaying &&
+    audioElement.addEventListener("loadeddata", () => {
+      if (audioElement.readyState >= 2) {
+        audioElement.play();
+      }
+    });
 };
 
 const previousTrack = () => {
   if (currentTrackNumber - 1 > 0) {
     currentTrackNumber--;
   } else currentTrackNumber = myPlayList.length - 1;
-  setCurrentTrack(currentTrackNumber);
   playActions();
 };
 
@@ -168,7 +163,6 @@ const nextTrack = () => {
   if (myPlayList.length > currentTrackNumber + 1) {
     currentTrackNumber++;
   } else currentTrackNumber = 0;
-  setCurrentTrack(currentTrackNumber);
   playActions();
 };
 
@@ -185,15 +179,18 @@ const progressBar = document.querySelector(".progressBar");
 const progressBarCenter = document.querySelector(".progressBarCenter");
 const songTiming = document.querySelectorAll(".songTiming div");
 
+let audioElement = new Audio();
+setCurrentTrack(currentTrackNumber);
+audioElement.src = trackUrl;
+
 playButton.addEventListener("click", playTrack);
 pauseButton.addEventListener("click", pauseTrack);
 previousTrackButton.addEventListener("click", previousTrack);
 nextTrackButton.addEventListener("click", nextTrack);
 progressBar.addEventListener("click", progressBarClick);
+audioElement.addEventListener("ended", nextTrack);
+audioElement.addEventListener("timeupdate", updateProgressBar);
 window.addEventListener("resize", updateProgressBar);
-
-setCurrentTrack(currentTrackNumber);
-let audioElement = new Audio(trackUrl);
 
 progressBarCenter.onpointerdown = (event) => {
   isPlaying && audioElement.pause();
@@ -219,31 +216,3 @@ progressBarCenter.onpointerdown = (event) => {
     isPlaying && audioElement.play();
   };
 };
-
-// progressBarCenter.onmousedown = (event) => {
-//   event.preventDefault();
-//   let shiftX = event.clientX - progressBarCenter.getBoundingClientRect().left;
-//   let newLeft;
-//   const onMouseMove = (event) => {
-//     newLeft = event.clientX - shiftX - progressBar.getBoundingClientRect().left;
-
-//     if (newLeft < -9) {
-//       newLeft = -9;
-//     }
-//     let rightEdge = progressBar.offsetWidth - progressBarCenter.offsetWidth;
-//     if (newLeft > rightEdge + 9) {
-//       newLeft = rightEdge + 9;
-//     }
-//     progressBarCenter.style.left = newLeft + "px";
-//     updateProgressBar(newLeft + 9);
-//   };
-
-//   const onMouseUp = () => {
-//     document.removeEventListener("mouseup", onMouseUp);
-//     document.removeEventListener("mousemove", onMouseMove);
-//     updateProgressBar(newLeft + 9);
-//   };
-
-//   document.addEventListener("mousemove", onMouseMove);
-//   document.addEventListener("mouseup", onMouseUp);
-// };

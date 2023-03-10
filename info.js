@@ -18,3 +18,33 @@
 
 // https://drive.google.com/file/d/1fWv84ky2CxI3sNMgFs-JHGTyRj2hqFJB/view?usp=sharing
 // https://drive.google.com/file/d/1dhK9fYrfNoPOld0Hz66xMDRXKXVe0dmf/view?usp=sharing
+
+
+
+// progressBarCenter.onmousedown = (event) => {
+//   event.preventDefault();
+//   let shiftX = event.clientX - progressBarCenter.getBoundingClientRect().left;
+//   let newLeft;
+//   const onMouseMove = (event) => {
+//     newLeft = event.clientX - shiftX - progressBar.getBoundingClientRect().left;
+
+//     if (newLeft < -9) {
+//       newLeft = -9;
+//     }
+//     let rightEdge = progressBar.offsetWidth - progressBarCenter.offsetWidth;
+//     if (newLeft > rightEdge + 9) {
+//       newLeft = rightEdge + 9;
+//     }
+//     progressBarCenter.style.left = newLeft + "px";
+//     updateProgressBar(newLeft + 9);
+//   };
+
+//   const onMouseUp = () => {
+//     document.removeEventListener("mouseup", onMouseUp);
+//     document.removeEventListener("mousemove", onMouseMove);
+//     updateProgressBar(newLeft + 9);
+//   };
+
+//   document.addEventListener("mousemove", onMouseMove);
+//   document.addEventListener("mouseup", onMouseUp);
+// };
